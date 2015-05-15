@@ -66,6 +66,18 @@ class Employee
     @reviews[key]
   end
 
+  def good_reviews
+    strings = @reviews.values.flatten
+    good_reviews = []
+    strings.each do |string|
+      good_words = string.scan(/good|great/)
+      bad_words = string.scan(/bad|terrible/)
+      if good_words.length > bad_words.length
+        good_reviews << string
+      end
+    end
+    good_reviews
+  end
 
 
 end
