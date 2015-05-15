@@ -1,6 +1,6 @@
 class Employee
   attr_reader :name, :emails, :phones, :salary
-  def initialize(name: '', email: '', phone: '', salary: 50000, department: '')
+  def initialize(name: '', email: '', phone: '', salary: 50000, department: '', review: '')
     @name = name
     @emails = []
     @emails << email if email != ''
@@ -15,6 +15,8 @@ class Employee
       @no_department = false
       @department.add_employee(self)
     end
+    @reviews = {}
+    add_review(review)
   end
 
   def department
@@ -47,6 +49,16 @@ class Employee
       @no_department = false
       @department.add_employee(self)
     else return false
+    end
+  end
+
+  def reviews
+    @reviews.values.flatten
+  end
+
+  def add_review(review)
+    if review != ''
+      @reviews.merge!(review){|key, oldval, newval| ([oldval]<<newval).flatten}
     end
   end
 end

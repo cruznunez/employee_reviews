@@ -95,7 +95,33 @@ class EmployeeReviewTest < Minitest::Test
     peon3 = Employee.new(name: "John", salary: 60000)
     dept.add_employee(peon1, peon2, peon3)
     assert_equal 160000, dept.salaries
-
   end
+
+  def review1
+    {'monday' => "Joe is a good kid."}
+  end
+
+  def test_employee_can_have_reviews
+    peon = Employee.new(name: "Joe", review: review1)
+    assert peon.reviews
+    assert_equal ["Joe is a good kid."], peon.reviews
+    peon.add_review(review2)
+    assert_equal ["Joe is a good kid.", "Joe spilled some milk today."], peon.reviews
+    peon.add_review(review3)
+    assert_equal ["Joe is a good kid.", "Joe spilled some milk today.", "Joe is a boss!"], peon.reviews
+  end
+
+  def review2
+    {'tuesday' => "Joe spilled some milk today."}
+  end
+
+  def review3
+    {'tuesday' => "Joe is a boss!"}
+  end
+
+  # def test_reviews_can_have_dates
+  #   peon = Employee.new(name: "Joe", review: review1)
+  #   assert_equal {"monday" => "Joe is a good kid."}, peon.reviews
+  # end
 
 end
