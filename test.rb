@@ -134,6 +134,20 @@ class EmployeeReviewTest < Minitest::Test
 
   def test_review_can_be_good
     peon = Employee.new(name: "Joe", review: good_review)
-    assert_equal [good_review["monday"]], peon.good_reviews
+    assert_equal good_review.values, peon.good_reviews
+    peon.add_review(review1)
+    assert_equal [good_review.values, review1.values].flatten, peon.good_reviews
+  end
+
+  def bad_review
+    {"wednesday" => "Uhhh. Joe is a meanie. So today I asked him if they had a"\
+      " certain shoe in other sizes. He said they were out of size 18. What a"\
+      " jerk! Someone fire this clown. Zero out of ten, would not come again."
+    }
+  end
+
+  def test_review_can_be_bad
+    peon = Employee.new(name: "Joe", review: bad_review)
+    assert_equal bad_review.values, peon.bad_reviews
   end
 end

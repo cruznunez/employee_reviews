@@ -1,5 +1,5 @@
 class Employee
-  attr_reader :name, :emails, :phones, :salary
+  attr_reader :name, :emails, :phones, :salary, :good_reviews, :bad_reviews
   def initialize(name: '', email: '', phone: '', salary: 50000, department: '', review: '')
     @name = name
     @emails = []
@@ -16,6 +16,8 @@ class Employee
       @department.add_employee(self)
     end
     @reviews = {}
+    @good_reviews = []
+    @bad_reviews = []
     add_review(review)
   end
 
@@ -59,6 +61,7 @@ class Employee
   def add_review(review)
     if review != ''
       @reviews.merge!(review){|key, oldval, newval| ([oldval]<<newval).flatten}
+      rate_review(review)
     end
   end
 
@@ -66,18 +69,15 @@ class Employee
     @reviews[key]
   end
 
-  def good_reviews
-    strings = @reviews.values.flatten
-    good_reviews = []
-    strings.each do |string|
-      good_words = string.scan(/good|great/)
-      bad_words = string.scan(/bad|terrible/)
-      if good_words.length > bad_words.length
-        good_reviews << string
-      end
+  private def rate_review(review)
+    string = review.values[0]
+    good_words = string.scan(/good|great/)
+    bad_words = string.scan(/bad|terrible|jerk|fire/)
+    if good_words.length > bad_words.length
+      @good_reviews << string
+    elsif good_words.length < bad_words.length
+      @bad_reviews << string
     end
-    good_reviews
   end
-
 
 end
