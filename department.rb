@@ -7,21 +7,21 @@ class Department
 
   def add_employee(*employee)
     if employee.length > 1
-      employee.map{|x| @employees<<x;x.add_department(self)}
+      employee.map do |x|
+        @employees << x
+        x.add_department(self)
+      end
     else
       @employees<<employee
     end
-    # @employees << employee
-    @employees = @employees.flatten(1)
+    @employees.flatten!
   end
 
   def salaries
     if @employees.length == 0
       false
-    elsif @employees.length == 1
-      @employees[0].salary
     else
-      @employees.reduce{|sum, n| (sum.salary) + (n.salary)}
+      @employees.inject(0){|sum, n| sum + n.salary}
     end
   end
 end

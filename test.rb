@@ -88,14 +88,14 @@ class EmployeeReviewTest < Minitest::Test
     assert_equal 50000, dept.salaries
   end
 
-  # def test_total_salary_for_a_single_department_2
-  #   dept = Department.new("shoe")
-  #   peon1 = Employee.new(name: "Jack")
-  #   peon2 = Employee.new(name: "Jill")
-  #   peon3 = Employee.new(name: "John", salary: 60000)
-  #   dept.add_employee(peon1, peon2, peon3)
-  #   assert_equal 160000, dept.salaries
+  def test_total_salary_for_a_single_department_2
+    dept = Department.new("shoe")
+    peon1 = Employee.new(name: "Jack")
+    peon2 = Employee.new(name: "Jill")
+    peon3 = Employee.new(name: "John", salary: 60000)
+    dept.add_employee(peon1, peon2, peon3)
+    assert_equal 160000, dept.salaries
 
-  # end
+  end
 
 end
