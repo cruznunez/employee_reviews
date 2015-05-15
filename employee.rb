@@ -61,4 +61,11 @@ class Employee
       @reviews.merge!(review){|key, oldval, newval| ([oldval]<<newval).flatten}
     end
   end
+
+  def review(key)
+    @reviews[key]
+  end
+
+
+
 end

@@ -119,9 +119,20 @@ class EmployeeReviewTest < Minitest::Test
     {'tuesday' => "Joe is a boss!"}
   end
 
-  # def test_reviews_can_have_dates
-  #   peon = Employee.new(name: "Joe", review: review1)
-  #   assert_equal {"monday" => "Joe is a good kid."}, peon.reviews
-  # end
+  def test_reviews_can_have_dates
+    peon = Employee.new(name: "Joe", review: review1)
+    assert_equal "Joe is a good kid.", peon.review("monday")
+  end
 
+  def good_review
+    {"monday" => 'Joe is a great worker. He likes engaging with others in,'\
+    ' conversation. He does not mind getting things for the customer. I bet he'\
+    'a good relationship with his mother. I think he will go far in this'\
+    ' business. Keep up the good work.'
+    }
+  end
+
+  def test_review_can_be_good
+
+  end
 end
