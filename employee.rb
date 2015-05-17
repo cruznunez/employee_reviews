@@ -1,5 +1,6 @@
 class Employee
   attr_reader :name, :emails, :phones, :salary, :good_reviews, :bad_reviews
+
   def initialize(name: '', email: '', phone: '', salary: 50000, department: '', review: '')
     @name = name
     @emails = []
@@ -59,7 +60,7 @@ class Employee
   end
 
   def add_review(review)
-    if review != ''
+    if review != '' && review.class == Hash
       @reviews.merge!(review){|key, oldval, newval| ([oldval]<<newval).flatten}
       rate_review(review)
     end
@@ -71,8 +72,8 @@ class Employee
 
   private def rate_review(review)
     string = review.values[0]
-    good_words = string.scan(/good|great/)
-    bad_words = string.scan(/bad|terrible|jerk|fire/)
+    good_words = string.scan(/good|great|quick service|good kid/i)
+    bad_words = string.scan(/bad|terrible|jerk|fire/i)
     if good_words.length > bad_words.length
       @good_reviews << string
     elsif good_words.length < bad_words.length
@@ -80,4 +81,7 @@ class Employee
     end
   end
 
+  def give_raise(dollars)
+    @salary += dollars
+  end
 end

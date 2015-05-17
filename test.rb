@@ -150,4 +150,45 @@ class EmployeeReviewTest < Minitest::Test
     peon = Employee.new(name: "Joe", review: bad_review)
     assert_equal bad_review.values, peon.bad_reviews
   end
+
+  def test_employee_gets_raise
+    peon = Employee.new(name: "Cruz", salary: 40000)
+    peon.give_raise(960000)
+    assert_equal 1000000, peon.salary
+  end
+
+  def cruz_review
+    {"Monday" => "Fire this kid right now. This guy said my feet stink! I mean"\
+      " he's not lying, but then he said even the men's room smells"\
+      " better! He's still right, but I mean that last part was uncalled for..."}
+  end
+
+  def chris_review
+    {"Tuesday" =>"Can someone say employee of the year?! This guy. Whooo!"\
+      " I kid you not, I was two steps into the store when he came up and"\
+      " shook my hand, and took me to the shoes, grabbed a box, said here"\
+      ", and sent me to checkout. All in under a minute! That's quick service."}
+  end
+
+  def bob_review
+    {"Wednesday" => "Meh. Bob is kinda a weirdo but he did his stuff alright. At least"\
+      " he's better than Cruz. Boy, that guy was mean. Bob's a good kid."}
+  end
+
+  def test_department_gets_raise
+    cruz = Employee.new(name: "cruz", salary: 50000)
+    chris = Employee.new(name: "chris", salary: 50000)
+    bob = Employee.new(name: "bob", salary: 50000)
+    department = Department.new("Shoe")
+    department.add_employee(cruz, chris, bob)
+    cruz.add_review(cruz_review)
+    chris.add_review(chris_review)
+    bob.add_review(bob_review)
+    department.give_raise(100000)
+    assert_equal 50000, cruz.salary
+    assert_equal 100000, chris.salary
+    assert_equal 100000, bob.salary
+  end
+
+
 end

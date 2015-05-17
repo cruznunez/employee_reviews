@@ -24,4 +24,19 @@ class Department
       @employees.inject(0){|sum, n| sum + n.salary}
     end
   end
+
+  def give_raise(dollars)
+    employees = @employees.length
+    @employees.map do |employee|
+      if employee.bad_reviews.length > employee.good_reviews.length
+        employees -= 1
+      end
+    end
+    raise = dollars/employees
+    @employees.map do |employee|
+      if employee.good_reviews.length > employee.bad_reviews.length
+        employee.give_raise(raise)
+      end
+    end
+  end
 end
