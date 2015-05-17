@@ -201,7 +201,7 @@ class EmployeeReviewTest < Minitest::Test
 
   def test_give_raises_to_department_with_block
     cruz = Employee.new(name: "cruz", salary: 100000)
-    chris = Employee.new(name: "chris", salary: 100100)
+    chris = Employee.new(name: "chris", salary: 101000)
     bob = Employee.new(name: "bob", salary: 99000)
     department = Department.new("Shoe")
     department.add_employee(cruz, chris, bob)

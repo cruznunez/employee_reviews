@@ -28,15 +28,17 @@ class Department
 
   def give_raises(dollars)
     employees = @employees.length
-    @employees.map do |employee|
-      if employee.bad_reviews.length > employee.good_reviews.length
-        employees -= 1
+    if block_given?
+      @employees.map{ |employee| !yield(employee) ? employees -= 1 : () }
+      raise = dollars/employees
+      @employees.map{ |employee| yield(employee) ? employee.give_raise(raise) : () }
+    else
+      @employees.map do |employee|
+        employee.bad_reviews.length > employee.good_reviews.length ? employees -= 1 : ()
       end
-    end
-    raise = dollars/employees
-    @employees.map do |employee|
-      if employee.good_reviews.length > employee.bad_reviews.length
-        employee.give_raise(raise)
+      raise = dollars/employees
+      @employees.map do |employee|
+        employee.good_reviews.length > employee.bad_reviews.length ? employee.give_raise(raise) : ()
       end
     end
   end
