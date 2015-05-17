@@ -199,5 +199,24 @@ class EmployeeReviewTest < Minitest::Test
 
   end
 
+  def test_give_raises_to_department_with_block
+    cruz = Employee.new(name: "cruz", salary: 100000)
+    chris = Employee.new(name: "chris", salary: 100100)
+    bob = Employee.new(name: "bob", salary: 99000)
+    department = Department.new("Shoe")
+    department.add_employee(cruz, chris, bob)
+    cruz.add_review(cruz_review)
+    chris.add_review(chris_review)
+    bob.add_review(bob_review)
+
+    department.give_raises(5000) do |employee|
+      employee.salary < 100000
+    end
+
+    assert_equal 100000, cruz.salary
+    assert_equal 101000, chris.salary
+    assert_equal 104000, bob.salary
+  end
+
 
 end
