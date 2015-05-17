@@ -24,6 +24,7 @@ class Employee
 
   def department
     @department.name
+    # puts @department
   end
 
   def add_phone(phone)
@@ -47,10 +48,9 @@ class Employee
   end
 
   def add_department(department)
-    if department.class == String && @no_department
-      @department = Department.new(department.capitalize)
+    if @department == nil
+      @department = department
       @no_department = false
-      @department.add_employee(self)
     else return false
     end
   end

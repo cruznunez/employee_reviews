@@ -50,6 +50,7 @@ class EmployeeReviewTest < Minitest::Test
 
     assert_equal ['9183749187', '0293982934', '0923840844'], employee.phones
   end
+
   def test_employee_has_salary
     assert Employee.new.salary
     dude = Employee.new(salary: 10000000000)
@@ -62,19 +63,23 @@ class EmployeeReviewTest < Minitest::Test
   end
 
   def test_employee_can_belong_to_one_department
-    peon1 = Employee.new(name: "Mason", department: "shoe")
-    peon2 = Employee.new(name: "Mathon")
-    peon2.add_department("Hat")
+    peon1 = Employee.new(name: "Mason")
+    peon2 = Employee.new(name: "Mathan")
+    shoe_department = Department.new("shoe")
+    hat_department = Department.new("Hat")
+    shoe_department.add_employee(peon1)
+    hat_department.add_employee(peon2)
 
     assert_equal "Shoe", peon1.department
-    refute peon2.add_department("Bandage")
     assert_equal "Hat", peon2.department
   end
 
   def test_department_can_have_many_employees
-    peon1 = Employee.new(name: "Jack", department: "shoe")
+    peon1 = Employee.new(name: "Jack")
     peon2 = Employee.new(name: "Matt")
-    peon2.add_department("Shoe")
+
+    department = Department.new('shoe')
+    department.add_employee(peon1, peon2)
 
     assert_equal "Shoe", peon1.department
     assert_equal "Shoe", peon2.department
@@ -184,10 +189,14 @@ class EmployeeReviewTest < Minitest::Test
     cruz.add_review(cruz_review)
     chris.add_review(chris_review)
     bob.add_review(bob_review)
-    department.give_raise(100000)
+    department.give_raises(100000)
     assert_equal 50000, cruz.salary
     assert_equal 100000, chris.salary
     assert_equal 100000, bob.salary
+  end
+
+  def test_pathological
+
   end
 
 

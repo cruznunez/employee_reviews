@@ -1,7 +1,7 @@
 class Department
   attr_reader :name
   def initialize(name)
-    @name = name
+    @name = name.capitalize
     @employees = []
   end
 
@@ -12,7 +12,8 @@ class Department
         x.add_department(self)
       end
     else
-      @employees<<employee
+      @employees<<employee[0]
+      employee[0].add_department(self)
     end
     @employees.flatten!
   end
@@ -25,7 +26,7 @@ class Department
     end
   end
 
-  def give_raise(dollars)
+  def give_raises(dollars)
     employees = @employees.length
     @employees.map do |employee|
       if employee.bad_reviews.length > employee.good_reviews.length
