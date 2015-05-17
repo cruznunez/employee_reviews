@@ -1,5 +1,6 @@
 class Department
   attr_reader :name
+
   def initialize(name)
     @name = name.capitalize
     @employees = []
@@ -34,11 +35,11 @@ class Department
       @employees.map{ |employee| yield(employee) ? employee.give_raise(raise) : () }
     else
       @employees.map do |employee|
-        employee.bad_reviews.length > employee.good_reviews.length ? employees -= 1 : ()
+        !employee.keep? ? employees -= 1 : ()
       end
       raise = dollars/employees
       @employees.map do |employee|
-        employee.good_reviews.length > employee.bad_reviews.length ? employee.give_raise(raise) : ()
+        employee.keep? ? employee.give_raise(raise) : ()
       end
     end
   end

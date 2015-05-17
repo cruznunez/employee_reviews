@@ -6,8 +6,8 @@ class Employee
     @emails = []
     @emails << email if email != ''
     @phones = []
-    @phones << check_phone(phone) if phone != ''
-    @phones.flatten!
+    add_phone(phone)
+    # [phone].flatten.map{|one_phone| add_phone(one_phone)}
     @salary = salary
     @no_department = true
     @department = nil
@@ -27,22 +27,18 @@ class Employee
     # puts @department
   end
 
-  def add_phone(phone)
-    phone = phone.to_s
-    if phone.scan(/\d/).join.empty?
-      return
+  def add_phone(phones)
+    [phones].flatten.map do |phone|
+      phone = phone.to_s
+      phone.scan(/\d/).join.empty? ? return : ()
+      @phones << check_phone(phone) if phone != ''
     end
-    @phones << check_phone(phone) if phone != ''
     @phones.flatten!
   end
 
   private def check_phone(other)
     valid_phones = []
-    if other.class == Array
-      other.map{|x| valid_phones << x if x.length>7}
-    else
-      valid_phones << other.to_s
-    end
+    valid_phones << other.to_s
     valid_phones = valid_phones.map{|x| x.scan(/\d/).join}
     output = valid_phones.select{|x| x.length == 7 || x.length == 10}
   end
@@ -83,5 +79,9 @@ class Employee
 
   def give_raise(dollars)
     @salary += dollars
+  end
+
+  def keep?
+    @good_reviews.length > @bad_reviews.length
   end
 end
