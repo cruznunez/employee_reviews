@@ -2,7 +2,7 @@ class Employee
   attr_reader :name, :emails, :phones, :salary, :good_reviews, :bad_reviews
 
   def initialize(name: '', email: '', phone: '', salary: 50000, department: '', review: '')
-    @name = name
+    @name = name.capitalize
     @emails = []
     @emails << email if email != ''
     @phones = []
@@ -68,8 +68,8 @@ class Employee
 
   private def rate_review(review)
     string = review.values[0]
-    good_words = string.scan(/good|great|quick service|good kid/i)
-    bad_words = string.scan(/bad|terrible|jerk|fire/i)
+    good_words = string.scan(/good|great|quick service|good kid|happy/i)
+    bad_words = string.scan(/bad|terrible|jerk|fire|inadequate/i)
     if good_words.length > bad_words.length
       @good_reviews << string
     elsif good_words.length < bad_words.length

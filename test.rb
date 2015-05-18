@@ -19,7 +19,7 @@ class EmployeeReviewTest < Minitest::Test
   end
 
   def test_employee_has_name
-    assert_equal "name", Employee.new(name: "name").name
+    assert_equal "Name", Employee.new(name: "name").name
   end
 
   def test_employee_has_emails
@@ -259,7 +259,7 @@ class EmployeeReviewTest < Minitest::Test
   end
 
 
-  def postive_review_1
+  def positive_review_1
     {"Wednesday" =>
 
       "Xavier is a huge asset to SciMed and is a pleasure to work with. He"\
@@ -294,6 +294,17 @@ class EmployeeReviewTest < Minitest::Test
     zeke = Employee.new(name: "zeke")
     yvonne = Employee.new(name: "yvonne")
     xavier = Employee.new(name: "xavier")
+    wanda = Employee.new(name: "wanda")
+
+    zeke.add_review(negative_review_1)
+    yvonne.add_review(negative_review_2)
+    xavier.add_review(positive_review_1)
+    wanda.add_review(positive_review_2)
+
+    refute zeke.keep?
+    refute yvonne.keep?
+    assert xavier.keep?
+    assert wanda.keep?
   end
 
 end
